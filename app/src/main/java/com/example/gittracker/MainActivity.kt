@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GridScreen() {
     val gridSize = 7 * 10  // 5 rows of 7 days (like a weekly heatmap)
-    val squares = remember { mutableStateListOf<Boolean>().apply { repeat(gridSize) { add(false) } } }
+    val squares = remember { mutableStateListOf<Int>().apply { repeat(gridSize) { add(0) } } }
 
     Column(
         modifier = Modifier
@@ -43,9 +43,15 @@ fun GridScreen() {
                         modifier = Modifier
                             .padding(3.dp)
                             .size(30.dp)
-                            .background(if (isChecked) Color.Green else Color.LightGray)
+                            .background(
+                                when (squares[index]) {
+                                    1 -> Color.Green
+                                    2 -> Color.Yellow
+                                    else -> Color.LightGray
+                                }
+                            )
                             .clickable {
-                                squares[index] = !squares[index]
+                                squares[index] = (squares[index] + 1) % 3
                                 println("Square $index clicked. New state: ${squares[index]}")
                             }
                     )
