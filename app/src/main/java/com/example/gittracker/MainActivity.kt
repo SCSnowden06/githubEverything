@@ -46,6 +46,7 @@ fun GridScreen() {
                             .background(if (isChecked) Color.Green else Color.LightGray)
                             .clickable {
                                 squares[index] = !squares[index]
+                                println("Square $index clicked. New state: ${squares[index]}")
                             }
                     )
                 }
